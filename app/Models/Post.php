@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    /**
+     * Получить комментарии этого поста.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
