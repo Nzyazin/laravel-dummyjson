@@ -1,17 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Главная страница с кнопкой импорта
+Route::get('/', [PostController::class, 'welcome']);
 
-Route::get('/import', 'PostController@import');
-Route::get('/posts', 'PostController@index');
+// Импорт данных
+Route::get('/import', [PostController::class, 'import']);
+
+// Вывод постов
+Route::get('/posts', [PostController::class, 'index']);

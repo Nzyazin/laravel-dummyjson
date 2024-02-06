@@ -34,5 +34,10 @@ class PostController extends Controller
         // Передаем посты в вид
         return view('posts.index', compact('posts'));
     }
+
+    public function welcome()
+    {
+        return view('welcome');
+    }
 }
 
