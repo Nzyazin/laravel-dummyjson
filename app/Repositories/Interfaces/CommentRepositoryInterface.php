@@ -4,5 +4,5 @@ namespace App\Repositories\Interfaces;
 
 interface CommentRepositoryInterface
 {
-    public function importComments($postId, array $comments);
+    public function importCommentsForPost(array $comments);
 }
