@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Repositories\Interfaces\PostRepositoryInterface;
 use App\Repositories\Interfaces\CommentRepositoryInterface;
 use App\Services\DummyJsonService; // Предполагается, что этот сервис реализует логику запросов к внешнему API
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -38,15 +36,15 @@ class PostController extends Controller
             }
         } catch (\Exception $e) {
             // В случае возникновения исключения возвращаемся с ошибкой
-            return redirect('/')->with('error', 'Failed to import posts');
+            return redirect('/')->with('error', 'Failed to import. Error: ' . $e->getMessage());
         }
     }
 
     public function index()
     {
-
-        // Передаем посты в вид
-        return view('posts.index', compact('posts'));
+        $posts = $this->postRepository->getLatestPostsWithComments();
+        // Передаем посты
+        return view('index', compact('posts'));
     }
 
     public function welcome()
