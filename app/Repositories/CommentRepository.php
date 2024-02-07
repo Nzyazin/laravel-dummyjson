@@ -10,31 +10,36 @@ use Illuminate\Support\Facades\Log;
 
 class CommentRepository implements CommentRepositoryInterface
 {
-    public function importComments($postId, array $comments)
-    {        
-        
-        foreach ($comments as $comment) {
-            $existingComment = Comment::where('id', $comment['id'])->first();
-            if (!$existingComment) {
-                $validator = Validator::make($comment, [
-                    'id' => 'required|numeric|unique:posts',
-                    'body' => 'required|string',
-                    'post_id' => 'required|numeric',
-                    'user_id' => 'required|numeric'
-                ]);
+    public function importCommentsForPost(array $comments)
+    {
+        $errors = [];
+        foreach ($comments as $commentsForPost) {
+            foreach ($commentsForPost['comments'] as $comment) {
+                $existingComment = Comment::where('id', $comment['id'])->first();
+                if (!$existingComment) {
+                    $validator = Validator::make($comment, [
+                        'id' => 'required|numeric|unique:comments',
+                        'body' => 'required|string',
+                        'postId' => 'required|numeric',
+                        'user' => 'required|array'
+                    ]);
 
-                if ($validator->fails()) {
-                    return response()->json(['errors' => $validator->errors()], 422);
+                    if ($validator->fails()) {
+                        $errors[] = $validator->errors();
+                        dd($errors);
+                    }
+
+                    Comment::create([
+                        'id' => $comment['id'],
+                        'body' => $comment['body'],
+                        'postId' => $comment['postId'],
+                        'user' => json_encode($comment['user'])
+                    ]);
                 }
-
-                Comment::create([
-                    'id' => $comment['id'],
-                    'body' => $comment['body'],
-                    'post_id' => $comment['postId'],
-                    'user_id' => $comment['user']['id']
-                ]);
             }
-            
+        }
+        if (!empty($errors)) {
+            return response()->json(['errors' => $errors], 422);
         }
     }
 }
