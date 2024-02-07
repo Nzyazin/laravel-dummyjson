@@ -50,14 +50,14 @@ class PostRepository implements PostRepositoryInterface
         $commentRepository->importCommentsForPost($commentsPosts);
     }
 
-    public function getLatestPostsWithComments(int $postsCount = 25, int $commentsCount = 3)
+    public function getLatestPostsWithComments(int $postsPerPage = 25, int $commentsCount = 3)
     {
-        $posts = Post::latest()->take($postsCount)->get();
+        $posts = Post::latest()->paginate($postsPerPage);
 
         $postIds = $posts->pluck('id');
-        $comments = Comment::whereIn('post_id', $postIds)
+        $comments = Comment::whereIn('postId', $postIds)
             ->get()
-            ->groupBy('post_id')
+            ->groupBy('postId')
             ->map(function ($comments) use ($commentsCount) {
                 return $comments->take($commentsCount);
             });
