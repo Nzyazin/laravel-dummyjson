@@ -38,7 +38,7 @@ class DummyJsonService
             return $response->json();
         } else {
             // Обработка ошибочного ответа
-            Log::error("Ошибка при получении комментариев: {$response->status()}");
+            Log::error("Ошибка при получении комментария: {$response->status()} к ID поста: {$postId}");
             return []; // Возврат пустого массива или сообщения об ошибке
         }
     }
