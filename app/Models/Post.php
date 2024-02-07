@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use HasFactory;
+    
     protected $fillable = ['id', 'title', 'body', 'userId', 'tags', 'reactions'];
     /**
      * Получить комментарии этого поста.
