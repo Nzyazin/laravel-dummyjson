@@ -14,6 +14,6 @@ class PostSeeder extends Seeder
     public function run()
     {
         // Создание 72 постов с помощью фабрики
-        Post::factory()->count(36)->create();
+        Post::factory()->count(72)->create();
     }
 }
