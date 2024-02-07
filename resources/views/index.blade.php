@@ -5,6 +5,7 @@
         <a href="{{ url('/') }}" class="btn btn-primary">Home</a>
         @if ($posts->count())
             <div class="list-group">
+                {{ $posts->links() }}
                 @foreach ($posts as $post)
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading">{{ $post->title }}</h4>
