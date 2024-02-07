@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')   
-    <p>Click the button below to import posts and comments.</p>
+    <p>Click the button below.</p>
     @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
