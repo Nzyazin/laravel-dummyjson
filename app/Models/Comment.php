@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['id', 'body', 'post_id', 'user_id'];
+    protected $fillable = ['id', 'body', 'postId', 'user'];
     /**
      * Получить пост, к которому относится этот комментарий.
      */
     public function post()
     {
-        return $this->belongsTo(Post::class, 'post_id');
+        return $this->belongsTo(Post::class, 'postId');
     }
 }
